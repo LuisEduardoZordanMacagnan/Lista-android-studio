@@ -1,12 +1,16 @@
 package br.com.ifsc.app;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +50,22 @@ public class MainActivity extends AppCompatActivity {
 
         //Setando
         listView.setAdapter(adapter2);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ApplicationInfo applicationInfo = (ApplicationInfo) parent.getItemAtPosition(position);
+                String packageName = applicationInfo.packageName;
+                Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
+
+                Intent intent = pm.getLaunchIntentForPackage(packageName);
+                if (intent != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Não foi possível abrir o aplicativo", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
 }

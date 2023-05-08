@@ -40,4 +40,6 @@ public class AplicativosAdapter extends ArrayAdapter {
 
         return convertView;
     }
+
+
 }
